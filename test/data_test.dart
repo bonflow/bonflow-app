@@ -12,6 +12,17 @@ import 'package:material_ui/material_ui.dart';
 import 'support/fakes.dart';
 
 void main() {
+  group('settings', () {
+    test('courses are on unless the server switches them off', () {
+      expect(MasterData.fromJson(masterDataJson).settings.coursesEnabled, isTrue);
+      final off = MasterData.fromJson({
+        ...masterDataJson,
+        'settings': {'coursesEnabled': false},
+      });
+      expect(off.settings.coursesEnabled, isFalse);
+    });
+  });
+
   group('colours', () {
     test('master data carries the configured colours', () {
       final data = MasterData.fromJson(masterDataJson);
