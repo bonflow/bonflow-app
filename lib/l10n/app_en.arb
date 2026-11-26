@@ -1,0 +1,12 @@
+{
+  "@@locale": "en",
+  "appTitle": "BonFlow",
+  "loginTitle": "Sign in",
+  "loginUser": "User",
+  "loginPin": "PIN",
+  "loginSubmit": "Sign in",
+  "tablesTitle": "Tables",
+  "orderTitle": "Order",
+  "orderForTable": "Order for table {table}",
+  "menuTitle": "Menu"
+}

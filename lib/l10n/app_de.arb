@@ -1,0 +1,17 @@
+{
+  "@@locale": "de",
+  "appTitle": "BonFlow",
+  "loginTitle": "Anmelden",
+  "loginUser": "Benutzer",
+  "loginPin": "PIN",
+  "loginSubmit": "Anmelden",
+  "tablesTitle": "Tische",
+  "orderTitle": "Bestellung",
+  "orderForTable": "Bestellung für Tisch {table}",
+  "@orderForTable": {
+    "placeholders": {
+      "table": {"type": "String"}
+    }
+  },
+  "menuTitle": "Karte"
+}

@@ -121,3 +121,12 @@ app.*.symbols
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
+
+# Keep the lockfile for the app (the template above ignores *.lock)
+!pubspec.lock
+
+# Generated localizations (created by `flutter pub get`)
+lib/l10n/generated/
+
+# Generated API client, if regenerated in CI instead of committed
+# packages/bonflow_api/
