@@ -87,7 +87,7 @@ class OutboxController extends Notifier<OutboxState> {
   /// be reached for.
   Future<void> flush() async {
     await _loaded;
-    if (_flushing || state.pending.isEmpty || !ref.mounted) {
+    if (!ref.mounted || _flushing || state.pending.isEmpty) {
       return;
     }
     _flushing = true;
