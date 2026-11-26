@@ -34,6 +34,8 @@ void main() {
     expect(sent, isFalse);
     expect(first.read(outboxControllerProvider).pending, hasLength(1));
 
+    await pumpEventQueue(); // let the background retry of the first run finish
+
     // a restarted app finds the order again and sends it
     repository.online = true;
     final second = container(repository, store);

@@ -37,7 +37,9 @@ class OutboxController extends Notifier<OutboxState> {
     }
     Future.microtask(() async {
       await _loaded;
-      await flush();
+      if (ref.mounted) {
+        await flush();
+      }
     });
     return const OutboxState();
   }
@@ -65,6 +67,9 @@ class OutboxController extends Notifier<OutboxState> {
     } on ApiError catch (e) {
       if (!_retryable(e)) {
         rethrow;
+      }
+      if (!ref.mounted) {
+        return false;
       }
       final order = PendingOrder(id: id, tableId: tableId, lines: lines);
       final pending = [
@@ -94,7 +99,7 @@ class OutboxController extends Notifier<OutboxState> {
               .submit(id: order.id, tableId: order.tableId, lines: order.lines);
           await _remove(order, rejected: false);
         } on ApiError catch (e) {
-          if (_retryable(e)) {
+          if (!ref.mounted || _retryable(e)) {
             break;
           }
           await _remove(order, rejected: true);
@@ -117,6 +122,9 @@ class OutboxController extends Notifier<OutboxState> {
       e.kind == ApiErrorKind.tooManyRequests;
 
   Future<void> _remove(PendingOrder order, {required bool rejected}) async {
+    if (!ref.mounted) {
+      return;
+    }
     final pending = [
       for (final p in state.pending)
         if (p.id != order.id) p,
