@@ -11,11 +11,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4   # pin to a commit SHA
+      - uses: actions/checkout@v7   # pin to a commit SHA
       - uses: subosito/flutter-action@v2   # pin to a commit SHA
         with:
           channel: stable
           cache: true
       - run: flutter pub get
-      - run: flutter analyze
+      # Flutter 3.50 deprecates package:flutter/material.dart (see README, "Material migration").
+      # Drop --no-fatal-warnings after running the migration.
+      - run: flutter analyze --no-fatal-warnings
       - run: flutter test

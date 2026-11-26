@@ -29,9 +29,27 @@ This repo was scaffolded without a Flutter SDK, so the platform folders do not e
 
 ```bash
 flutter create . --project-name bonflow_app --org ch.example.bonflow --platforms=android,ios
-flutter pub get      # also generates the localizations
+flutter pub upgrade --major-versions   # bump all packages to their latest releases
+flutter pub get                        # also generates the localizations
 flutter analyze && flutter test
 ```
+
+Requires Flutter 3.50 / Dart 3.14 or newer. The package versions in `pubspec.yaml` are lower
+bounds that were not checked against pub.dev, hence the `--major-versions` upgrade.
+
+### Material migration
+
+Flutter 3.50 deprecates the bundled `package:flutter/material.dart` in favour of the standalone
+`material_ui` and `cupertino_ui` packages. The code still uses the old import (it compiles, with
+warnings). Migrate once with:
+
+```bash
+flutter pub add material_ui
+dart fix --apply --code=migrate_design_widgets
+```
+
+and then remove `--no-fatal-warnings` from `.github/workflows/ci.yml`. See the
+[migration guide](https://docs.flutter.dev/release/breaking-changes/material-ui-and-cupertino-ui).
 
 `flutter create .` keeps existing files, so it only adds `android/`, `ios/` and friends.
 
