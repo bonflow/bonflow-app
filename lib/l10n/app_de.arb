@@ -2,16 +2,99 @@
   "@@locale": "de",
   "appTitle": "BonFlow",
   "loginTitle": "Anmelden",
-  "loginUser": "Benutzer",
-  "loginPin": "PIN",
-  "loginSubmit": "Anmelden",
-  "tablesTitle": "Tische",
-  "orderTitle": "Bestellung",
-  "orderForTable": "Bestellung für Tisch {table}",
-  "@orderForTable": {
+  "loginSelectWaiter": "Wer bist du?",
+  "loginPinTitle": "PIN für {name}",
+  "@loginPinTitle": {
     "placeholders": {
-      "table": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
-  "menuTitle": "Karte"
+  "loginPin": "PIN",
+  "loginSubmit": "Anmelden",
+  "loginInvalidPin": "PIN falsch",
+  "loginLocked": "Zu viele Versuche. Bitte in {seconds} s erneut versuchen.",
+  "@loginLocked": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "loginNoWaiters": "Keine Mitarbeitenden vorhanden. Bitte im Admin anlegen.",
+  "errorOffline": "Server nicht erreichbar",
+  "errorGeneric": "Das hat nicht geklappt",
+  "errorConflict": "Die Bestellung wurde inzwischen geändert. Bitte prüfen und erneut senden.",
+  "retry": "Erneut versuchen",
+  "cancel": "Abbrechen",
+  "confirm": "OK",
+  "logout": "Abmelden",
+  "tablesTitle": "Tische",
+  "tablesEmpty": "Keine Tische vorhanden",
+  "tablesOffline": "Offline – gespeicherte Daten werden angezeigt",
+  "orderTitle": "Bestellung",
+  "orderForTable": "Tisch {table}",
+  "@orderForTable": {
+    "placeholders": {
+      "table": {
+        "type": "String"
+      }
+    }
+  },
+  "orderOpenOrders": "Offene Bestellungen",
+  "orderNoOpenOrders": "Noch keine offene Bestellung",
+  "orderNewLines": "Neue Positionen",
+  "orderAddItems": "Artikel hinzufügen",
+  "orderSend": "Senden",
+  "orderSendWhere": "Wohin senden?",
+  "orderNewOrder": "Neue Bestellung",
+  "orderFollowUp": "Nachbestellung zur Bestellung von {time}",
+  "@orderFollowUp": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "orderSent": "Bestellung gesendet",
+  "orderFrom": "Bestellung von {time}",
+  "@orderFrom": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "orderComplete": "Abschliessen",
+  "orderCompleteConfirm": "Bestellung abschliessen? Danach sind keine Nachbestellungen mehr möglich.",
+  "orderCancelItem": "Stornieren",
+  "orderCancelConfirm": "{item} stornieren?",
+  "@orderCancelConfirm": {
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  },
+  "orderCancelledMark": "storniert",
+  "orderRemoveLine": "Entfernen",
+  "ticketNew": "neu",
+  "ticketInProgress": "in Arbeit",
+  "ticketDone": "fertig",
+  "menuTitle": "Karte",
+  "menuEmpty": "Keine Artikel",
+  "menuAdd": "Hinzufügen",
+  "menuQuantity": "Menge",
+  "menuNote": "Notiz",
+  "menuCourse": "Gang",
+  "menuNoCourse": "Kein Gang",
+  "menuCourseN": "Gang {n}",
+  "@menuCourseN": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -13,15 +13,19 @@ Feature-first, state with Riverpod, navigation with go_router.
 
 ```
 lib/
-├── main.dart, app.dart, router.dart
-├── core/           config (--dart-define), shared Dio client
+├── main.dart, app.dart, router.dart   (router redirects by session state)
+├── core/           config (--dart-define), Dio clients, token + local storage, ApiError
 ├── features/
-│   ├── login/      PIN/password login, token storage
+│   ├── auth/       login repository, session controller (token refresh)
+│   ├── login/      waiter list + PIN dialog
+│   ├── masterdata/ master data models, ETag cache, controller
 │   ├── tables/     table overview per area
-│   ├── order/      order assembly and submission (client-generated order UUID)
-│   └── menu/       categories, articles, modifiers from the local master data cache
+│   ├── order/      table detail, open orders, station status, follow-up, storno, complete
+│   └── menu/       categories, articles, modifier sheet
 └── l10n/           ARB files (de, en), generated code in lib/l10n/generated
 ```
+
+Not yet included: offline queue for orders (sending requires the server), generated API client.
 
 ## First-time setup
 
