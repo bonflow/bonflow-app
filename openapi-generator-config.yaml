@@ -1,0 +1,6 @@
+# Config for openapi-generator (dart-dio), used by tool/generate_api.sh
+pubName: bonflow_api
+pubVersion: 0.1.0
+pubDescription: Generated BonFlow API client
+serializationLibrary: json_serializable
+useEnumExtension: true
