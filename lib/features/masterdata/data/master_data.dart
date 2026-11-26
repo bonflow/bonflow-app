@@ -7,6 +7,7 @@ class MasterData {
     required this.categories,
     required this.articles,
     required this.modifierGroups,
+    this.settings = const VenueSettings(),
   });
 
   factory MasterData.fromJson(Map<String, dynamic> json) {
@@ -21,6 +22,9 @@ class MasterData {
       categories: list('categories', ArticleCategory.fromJson),
       articles: list('articles', Article.fromJson),
       modifierGroups: list('modifierGroups', ModifierGroup.fromJson),
+      settings: json['settings'] is Map<String, dynamic>
+          ? VenueSettings.fromJson(json['settings'] as Map<String, dynamic>)
+          : const VenueSettings(),
     );
   }
 
@@ -30,6 +34,7 @@ class MasterData {
   final List<ArticleCategory> categories;
   final List<Article> articles;
   final List<ModifierGroup> modifierGroups;
+  final VenueSettings settings;
 
   Article? article(int id) {
     for (final article in articles) {
@@ -84,6 +89,17 @@ class MasterData {
 
   List<DiningTable> tablesOf(int areaId) =>
       tables.where((t) => t.areaId == areaId).toList();
+}
+
+/// Venue wide settings from the admin UI; missing values fall back to the defaults.
+class VenueSettings {
+  const VenueSettings({this.coursesEnabled = true});
+
+  factory VenueSettings.fromJson(Map<String, dynamic> json) =>
+      VenueSettings(coursesEnabled: json['coursesEnabled'] as bool? ?? true);
+
+  /// Whether articles can be assigned to courses ("Gang").
+  final bool coursesEnabled;
 }
 
 class Area {

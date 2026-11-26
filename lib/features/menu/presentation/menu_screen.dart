@@ -219,24 +219,26 @@ class _ItemSheetState extends State<_ItemSheet> {
                 ],
               ),
             ],
-            const SizedBox(height: 12),
-            Text(l10n.menuCourse, style: Theme.of(context).textTheme.titleSmall),
-            Wrap(
-              spacing: 8,
-              children: [
-                ChoiceChip(
-                  label: Text(l10n.menuNoCourse),
-                  selected: _course == null,
-                  onSelected: (_) => setState(() => _course = null),
-                ),
-                for (final course in _courses)
+            if (widget.data.settings.coursesEnabled) ...[
+              const SizedBox(height: 12),
+              Text(l10n.menuCourse, style: Theme.of(context).textTheme.titleSmall),
+              Wrap(
+                spacing: 8,
+                children: [
                   ChoiceChip(
-                    label: Text(l10n.menuCourseN(course)),
-                    selected: _course == course,
-                    onSelected: (_) => setState(() => _course = course),
+                    label: Text(l10n.menuNoCourse),
+                    selected: _course == null,
+                    onSelected: (_) => setState(() => _course = null),
                   ),
-              ],
-            ),
+                  for (final course in _courses)
+                    ChoiceChip(
+                      label: Text(l10n.menuCourseN(course)),
+                      selected: _course == course,
+                      onSelected: (_) => setState(() => _course = course),
+                    ),
+                ],
+              ),
+            ],
             const SizedBox(height: 12),
             TextField(
               key: const Key('item-note'),
