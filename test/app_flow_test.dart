@@ -3,6 +3,7 @@ import 'package:bonflow_app/core/storage/local_store.dart';
 import 'package:bonflow_app/core/storage/token_store.dart';
 import 'package:bonflow_app/features/auth/data/auth_repository.dart';
 import 'package:bonflow_app/features/masterdata/data/master_data_repository.dart';
+import 'package:bonflow_app/features/order/application/outbox_controller.dart';
 import 'package:bonflow_app/features/order/data/orders_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -24,6 +25,7 @@ void main() {
           FakeMasterDataRepository(),
         ),
         ordersRepositoryProvider.overrideWithValue(orders),
+        outboxIntervalProvider.overrideWithValue(null),
       ],
       child: const BonflowApp(),
     );

@@ -9,6 +9,7 @@ import '../../../core/util/uuid.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../masterdata/application/master_data_controller.dart';
 import '../../masterdata/data/master_data.dart';
+import '../application/outbox_controller.dart';
 import '../application/table_orders_controller.dart';
 import '../data/order_models.dart';
 import '../data/orders_repository.dart';
@@ -103,8 +104,11 @@ class _OrderScreenState extends ConsumerState<OrderScreen> {
     final messenger = ScaffoldMessenger.of(context);
     await _run(() async {
       final repository = ref.read(ordersRepositoryProvider);
+      var sent = true;
       if (targetOrderId == null) {
-        await repository.submit(id: _draftId, tableId: _tableId, lines: lines);
+        sent = await ref
+            .read(outboxControllerProvider.notifier)
+            .submit(id: _draftId, tableId: _tableId, lines: lines);
       } else {
         final order = orders.firstWhere((o) => o.id == targetOrderId);
         await repository.addItems(
@@ -118,7 +122,9 @@ class _OrderScreenState extends ConsumerState<OrderScreen> {
           _draft.clear();
           _draftId = newUuid();
         });
-        messenger.showSnackBar(SnackBar(content: Text(l10n.orderSent)));
+        messenger.showSnackBar(
+          SnackBar(content: Text(sent ? l10n.orderSent : l10n.outboxQueued)),
+        );
       }
     });
   }

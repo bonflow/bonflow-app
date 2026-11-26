@@ -7,6 +7,7 @@ import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/application/session_controller.dart';
 import '../../masterdata/application/master_data_controller.dart';
 import '../../masterdata/data/master_data.dart';
+import '../../order/application/outbox_controller.dart';
 
 /// Table overview per area; data comes from the cached master data (GET /masterdata).
 class TablesScreen extends ConsumerWidget {
@@ -18,6 +19,7 @@ class TablesScreen extends ConsumerWidget {
     final state = ref.watch(masterDataControllerProvider);
     final session = ref.watch(sessionControllerProvider).session;
     final data = state.data;
+    final outbox = ref.watch(outboxControllerProvider);
 
     Widget body;
     if (data == null) {
@@ -46,11 +48,43 @@ class TablesScreen extends ConsumerWidget {
       body = Center(child: Text(l10n.tablesEmpty));
     } else {
       body = RefreshIndicator(
-        onRefresh: () =>
-            ref.read(masterDataControllerProvider.notifier).refresh(),
+        onRefresh: () async {
+          await ref.read(masterDataControllerProvider.notifier).refresh();
+          await ref.read(outboxControllerProvider.notifier).flush();
+        },
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
+            if (outbox.pending.isNotEmpty)
+              Card(
+                key: const Key('outbox-banner'),
+                child: ListTile(
+                  leading: const Icon(Icons.cloud_off),
+                  title: Text(l10n.outboxPending(outbox.pending.length)),
+                  trailing: TextButton(
+                    key: const Key('outbox-send'),
+                    onPressed: () =>
+                        ref.read(outboxControllerProvider.notifier).flush(),
+                    child: Text(l10n.outboxSendNow),
+                  ),
+                ),
+              ),
+            if (outbox.dropped > 0)
+              Card(
+                key: const Key('outbox-dropped'),
+                child: ListTile(
+                  leading: Icon(
+                    Icons.error_outline,
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+                  title: Text(l10n.outboxDropped(outbox.dropped)),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () =>
+                        ref.read(outboxControllerProvider.notifier).clearDropped(),
+                  ),
+                ),
+              ),
             if (state.error != null)
               Padding(
                 padding: const EdgeInsets.only(bottom: 12),

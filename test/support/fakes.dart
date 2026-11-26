@@ -1,3 +1,4 @@
+import 'package:bonflow_app/core/network/api_error.dart';
 import 'package:bonflow_app/core/storage/local_store.dart';
 import 'package:bonflow_app/core/storage/token_store.dart';
 import 'package:bonflow_app/features/auth/data/auth_repository.dart';
@@ -161,3 +162,21 @@ ResponseBody jsonResponse(
     ...headers,
   },
 );
+
+/// Orders repository whose server can be switched off.
+class FlakyOrdersRepository extends FakeOrdersRepository {
+  bool online = false;
+
+  @override
+  Future<Order> submit({
+    required String id,
+    required int tableId,
+    required List<NewLine> lines,
+    String? note,
+  }) {
+    if (!online) {
+      throw const ApiError(kind: ApiErrorKind.offline);
+    }
+    return super.submit(id: id, tableId: tableId, lines: lines, note: note);
+  }
+}
