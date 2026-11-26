@@ -11,14 +11,14 @@ final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: '/login',
     routes: [
-      GoRoute(path: '/login', builder: (_, __) => const LoginScreen()),
-      GoRoute(path: '/tables', builder: (_, __) => const TablesScreen()),
+      GoRoute(path: '/login', builder: (_, _) => const LoginScreen()),
+      GoRoute(path: '/tables', builder: (_, _) => const TablesScreen()),
       GoRoute(
         path: '/tables/:tableId/order',
         builder: (_, state) =>
             OrderScreen(tableId: state.pathParameters['tableId']!),
         routes: [
-          GoRoute(path: 'menu', builder: (_, __) => const MenuScreen()),
+          GoRoute(path: 'menu', builder: (_, _) => const MenuScreen()),
         ],
       ),
     ],

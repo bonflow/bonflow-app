@@ -17,7 +17,5 @@ jobs:
           channel: stable
           cache: true
       - run: flutter pub get
-      # Flutter 3.50 deprecates package:flutter/material.dart (see README, "Material migration").
-      # Drop --no-fatal-warnings after running the migration.
-      - run: flutter analyze --no-fatal-warnings
+      - run: flutter analyze
       - run: flutter test

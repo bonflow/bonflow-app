@@ -13,6 +13,10 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any # version pinned by flutter_localizations
+  # Flutter 3.50 moved Material/Cupertino out of the SDK. `any` is resolved to the latest
+  # release by pub; run `flutter pub upgrade --major-versions` to pin a caret range.
+  material_ui: any
+  cupertino_ui: any
   flutter_riverpod: ^2.6.1
   go_router: ^16.0.0
   dio: ^5.9.0
