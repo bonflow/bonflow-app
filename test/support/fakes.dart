@@ -10,17 +10,17 @@ import 'package:dio/dio.dart';
 
 const masterDataJson = <String, dynamic>{
   'areas': [
-    {'id': 1, 'name': 'Terrasse'},
+    {'id': 1, 'name': 'Terrasse', 'color': '#1E88E5'},
   ],
   'tables': [
-    {'id': 10, 'areaId': 1, 'label': 'T1'},
+    {'id': 10, 'areaId': 1, 'label': 'T1', 'color': null},
   ],
   'stations': [
     {'id': 1, 'name': 'Küche'},
     {'id': 2, 'name': 'Bar'},
   ],
   'categories': [
-    {'id': 1, 'name': 'Getränke', 'sortOrder': 1},
+    {'id': 1, 'name': 'Getränke', 'sortOrder': 1, 'color': '#E53935'},
   ],
   'articles': [
     {

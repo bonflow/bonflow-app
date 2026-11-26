@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../../core/ui/hex_color.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../masterdata/application/master_data_controller.dart';
 import '../../masterdata/data/master_data.dart';
@@ -27,32 +28,79 @@ class MenuScreen extends ConsumerWidget {
           return bySort != 0 ? bySort : a.name.compareTo(b.name);
         });
       body = ListView(
+        padding: const EdgeInsets.only(bottom: 16),
         children: [
           for (final category in categories)
             if (data.articlesOf(category.id).isNotEmpty) ...[
               Padding(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
-                child: Text(
-                  category.name,
-                  style: Theme.of(context).textTheme.titleMedium,
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                child: Row(
+                  children: [
+                    if (parseHexColor(category.color) case final color?)
+                      Container(
+                        width: 14,
+                        height: 14,
+                        margin: const EdgeInsets.only(right: 8),
+                        decoration: BoxDecoration(
+                          color: color,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    Text(
+                      category.name,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ],
                 ),
               ),
-              for (final article in data.articlesOf(category.id))
-                ListTile(
-                  key: Key('article-${article.id}'),
-                  title: Text(article.name),
-                  trailing: Text(article.price.toStringAsFixed(2)),
-                  onTap: () async {
-                    final line = await showModalBottomSheet<NewLine>(
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (_) => _ItemSheet(article: article, data: data),
-                    );
-                    if (line != null && context.mounted) {
-                      context.pop(line);
-                    }
-                  },
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    for (final article in data.articlesOf(category.id))
+                      SizedBox(
+                        width: 156,
+                        height: 76,
+                        child: ColoredButton(
+                          key: Key('article-${article.id}'),
+                          color: parseHexColor(category.color),
+                          onPressed: () async {
+                            final line = await showModalBottomSheet<NewLine>(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (_) =>
+                                  _ItemSheet(article: article, data: data),
+                            );
+                            if (line != null && context.mounted) {
+                              context.pop(line);
+                            }
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                article.name,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Text(
+                                article.price.toStringAsFixed(2),
+                                style: const TextStyle(fontSize: 13),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
+              ),
             ],
         ],
       );

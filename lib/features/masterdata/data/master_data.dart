@@ -87,13 +87,19 @@ class MasterData {
 }
 
 class Area {
-  const Area({required this.id, required this.name});
+  const Area({required this.id, required this.name, this.color});
 
-  factory Area.fromJson(Map<String, dynamic> json) =>
-      Area(id: (json['id'] as num).toInt(), name: json['name'] as String);
+  factory Area.fromJson(Map<String, dynamic> json) => Area(
+    id: (json['id'] as num).toInt(),
+    name: json['name'] as String,
+    color: json['color'] as String?,
+  );
 
   final int id;
   final String name;
+
+  /// `#RRGGBB` or null.
+  final String? color;
 }
 
 class DiningTable {
@@ -101,17 +107,22 @@ class DiningTable {
     required this.id,
     required this.areaId,
     required this.label,
+    this.color,
   });
 
   factory DiningTable.fromJson(Map<String, dynamic> json) => DiningTable(
     id: (json['id'] as num).toInt(),
     areaId: (json['areaId'] as num).toInt(),
     label: json['label'] as String,
+    color: json['color'] as String?,
   );
 
   final int id;
   final int areaId;
   final String label;
+
+  /// `#RRGGBB`, already resolved by the server (own colour, else the area's); may be null.
+  final String? color;
 }
 
 class Station {
@@ -130,6 +141,7 @@ class ArticleCategory {
     required this.name,
     required this.sortOrder,
     this.parentId,
+    this.color,
   });
 
   factory ArticleCategory.fromJson(Map<String, dynamic> json) =>
@@ -138,12 +150,16 @@ class ArticleCategory {
         name: json['name'] as String,
         sortOrder: (json['sortOrder'] as num?)?.toInt() ?? 0,
         parentId: (json['parentId'] as num?)?.toInt(),
+        color: json['color'] as String?,
       );
 
   final int id;
   final String name;
   final int sortOrder;
   final int? parentId;
+
+  /// `#RRGGBB`, already resolved by the server (own colour, else the parent's); may be null.
+  final String? color;
 }
 
 class Article {
