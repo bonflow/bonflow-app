@@ -28,7 +28,7 @@ lib/
 This repo was scaffolded without a Flutter SDK, so the platform folders do not exist yet:
 
 ```bash
-flutter create . --project-name bonflow_app --org ch.famfrehner --platforms=android,ios
+flutter create . --project-name bonflow_app --org ch.famfrehner.bonflow --platforms=android,ios
 flutter pub upgrade --major-versions   # bump all packages to their latest releases
 flutter pub get                        # also generates the localizations
 flutter analyze && flutter test
