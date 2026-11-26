@@ -1,14 +1,37 @@
 import 'dart:convert';
 
 import 'package:bonflow_app/core/storage/local_store.dart';
+import 'package:bonflow_app/core/ui/hex_color.dart';
+import 'package:bonflow_app/features/masterdata/data/master_data.dart';
 import 'package:bonflow_app/features/masterdata/data/master_data_repository.dart';
 import 'package:bonflow_app/features/order/data/order_models.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'support/fakes.dart';
 
 void main() {
+  group('colours', () {
+    test('master data carries the configured colours', () {
+      final data = MasterData.fromJson(masterDataJson);
+      expect(data.areas.single.color, '#1E88E5');
+      expect(data.tables.single.color, isNull);
+      expect(data.categories.single.color, '#E53935');
+    });
+
+    test('hex colours are parsed and unreadable values ignored', () {
+      expect(parseHexColor('#1E88E5'), const Color(0xFF1E88E5));
+      expect(parseHexColor('blau'), isNull);
+      expect(parseHexColor(null), isNull);
+    });
+
+    test('text colour contrasts with the background', () {
+      expect(onColor(const Color(0xFFFDD835)), const Color(0xFF1B1B1B));
+      expect(onColor(const Color(0xFF3949AB)), const Color(0xFFFFFFFF));
+    });
+  });
+
   group('MasterDataRepository', () {
     test('stores data and ETag, then revalidates with If-None-Match', () async {
       final adapter = FakeAdapter((options) {

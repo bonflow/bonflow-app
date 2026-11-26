@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../../core/ui/error_text.dart';
+import '../../../core/ui/hex_color.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/application/session_controller.dart';
 import '../../masterdata/application/master_data_controller.dart';
@@ -134,7 +135,18 @@ class _AreaSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(area.name, style: Theme.of(context).textTheme.titleMedium),
+          Row(
+            children: [
+              if (parseHexColor(area.color) case final color?)
+                Container(
+                  width: 14,
+                  height: 14,
+                  margin: const EdgeInsets.only(right: 8),
+                  decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+                ),
+              Text(area.name, style: Theme.of(context).textTheme.titleMedium),
+            ],
+          ),
           const SizedBox(height: 8),
           Wrap(
             spacing: 8,
@@ -142,12 +154,19 @@ class _AreaSection extends StatelessWidget {
             children: [
               for (final table in tables)
                 SizedBox(
-                  width: 96,
-                  height: 64,
-                  child: FilledButton.tonal(
+                  width: 112,
+                  height: 72,
+                  child: ColoredButton(
                     key: Key('table-${table.id}'),
+                    color: parseHexColor(table.color ?? area.color),
                     onPressed: () => context.push('/tables/${table.id}/order'),
-                    child: Text(table.label),
+                    child: Text(
+                      table.label,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
                 ),
             ],
