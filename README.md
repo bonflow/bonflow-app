@@ -48,16 +48,20 @@ Since Flutter 3.50 Material and Cupertino are no longer part of the SDK. The app
 migrated; `flutter pub upgrade --major-versions` pins their versions). See the
 [migration guide](https://docs.flutter.dev/release/breaking-changes/material-ui-and-cupertino-ui).
 
-## API client
+## API contract
 
-The server's OpenAPI spec is the contract. Generate the Dart client from it:
+The server's OpenAPI spec is the contract. The app talks to the API through hand-written
+repositories; `test/contract` checks them against a snapshot of the spec
+(`test/contract/openapi.json`): every request must match an operation and its request schema, and
+responses generated from the spec (all properties filled) must be parsed by the app's models.
 
 ```bash
-tool/generate_api.sh http://localhost:8080/v3/api-docs   # or the CI artifact openapi.json
+tool/update_contract.sh [tag]    # fetch the spec of a bonflow-server release (default: latest)
+flutter test test/contract
 ```
 
-then enable the `bonflow_api` path dependency in `pubspec.yaml`. The generated package under
-`packages/` is committed or regenerated in CI, depending on how you want to version it.
+The `contract` workflow runs this weekly against the latest server release. To use a generated
+client instead, see `tool/generate_api.sh` (not used at the moment).
 
 ## Run
 
@@ -67,6 +71,6 @@ flutter run --dart-define=API_BASE_URL=https://bonflow.lan
 
 ## Status
 
-Skeleton: app shell, routes, placeholder screens, German/English strings, one widget test.
-Login, master data cache (version/ETag check, survives Wi-Fi drops), order submission with
-retry and the generated API client are still to be built (MVP in the architecture's phasing).
+Working: PIN login with token refresh, master data with ETag cache, table overview, order taking
+(new order, follow-up, storno, completion) with station status, offline queue for new orders,
+German/English strings.
