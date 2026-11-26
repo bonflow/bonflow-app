@@ -25,7 +25,7 @@ lib/
 └── l10n/           ARB files (de, en), generated code in lib/l10n/generated
 ```
 
-Not yet included: offline queue for orders (sending requires the server), generated API client.
+New orders are queued on the device while the server is unreachable and sent automatically (follow-up orders and storno need the server). Not yet included: generated API client.
 
 ## First-time setup
 

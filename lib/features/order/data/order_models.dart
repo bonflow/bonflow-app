@@ -24,6 +24,17 @@ class NewLine {
     this.modifierIds = const [],
   });
 
+  factory NewLine.fromJson(Map<String, dynamic> json) => NewLine(
+    articleId: (json['articleId'] as num).toInt(),
+    quantity: (json['quantity'] as num).toInt(),
+    note: json['note'] as String?,
+    course: (json['course'] as num?)?.toInt(),
+    modifierIds: [
+      for (final id in (json['modifierIds'] as List<dynamic>? ?? <dynamic>[]))
+        (id as num).toInt(),
+    ],
+  );
+
   final int articleId;
   final int quantity;
   final String? note;

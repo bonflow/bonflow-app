@@ -96,5 +96,23 @@
         "type": "int"
       }
     }
+  },
+  "outboxPending": "{count, plural, =1{1 Bestellung wartet auf Versand} other{{count} Bestellungen warten auf Versand}}",
+  "@outboxPending": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "outboxSendNow": "Jetzt senden",
+  "outboxQueued": "Server nicht erreichbar – Bestellung gespeichert, wird automatisch gesendet.",
+  "outboxDropped": "{count, plural, =1{1 gespeicherte Bestellung wurde vom Server abgelehnt} other{{count} gespeicherte Bestellungen wurden vom Server abgelehnt}}",
+  "@outboxDropped": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

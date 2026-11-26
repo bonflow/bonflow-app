@@ -47,5 +47,23 @@
   "menuNote": "Note",
   "menuCourse": "Course",
   "menuNoCourse": "No course",
-  "menuCourseN": "Course {n}"
+  "menuCourseN": "Course {n}",
+  "outboxPending": "{count, plural, =1{1 order waiting to be sent} other{{count} orders waiting to be sent}}",
+  "@outboxPending": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "outboxSendNow": "Send now",
+  "outboxQueued": "Server unreachable – order saved, it will be sent automatically.",
+  "outboxDropped": "{count, plural, =1{1 saved order was rejected by the server} other{{count} saved orders were rejected by the server}}",
+  "@outboxDropped": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }
