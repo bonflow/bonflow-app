@@ -20,7 +20,7 @@ dependencies:
   flutter_riverpod: ^2.6.1
   go_router: ^16.0.0
   dio: ^5.9.0
-  flutter_secure_storage: ^9.2.4 # tokens
+  flutter_secure_storage: ^11.2.0 # tokens
   shared_preferences: ^2.5.3 # master data cache + ETag
 
   # Generated API client (see tool/generate_api.sh). Uncomment after generating it:
