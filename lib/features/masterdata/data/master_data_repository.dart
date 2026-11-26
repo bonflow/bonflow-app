@@ -43,7 +43,7 @@ class MasterDataRepository {
         '/masterdata',
         options: Options(
           responseType: ResponseType.plain,
-          headers: {if (etag != null) 'If-None-Match': etag},
+          headers: {'If-None-Match': ?etag},
           validateStatus: (status) => status == 200 || status == 304,
         ),
       );
