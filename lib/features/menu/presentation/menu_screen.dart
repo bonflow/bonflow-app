@@ -65,8 +65,12 @@ class MenuScreen extends ConsumerWidget {
                         height: 76,
                         child: ColoredButton(
                           key: Key('article-${article.id}'),
-                          color: parseHexColor(category.color),
-                          onPressed: () async {
+                          color: article.soldOut
+                              ? null
+                              : parseHexColor(category.color),
+                          onPressed: article.soldOut
+                              ? null
+                              : () async {
                             final line = await showModalBottomSheet<NewLine>(
                               context: context,
                               isScrollControlled: true,
@@ -91,7 +95,9 @@ class MenuScreen extends ConsumerWidget {
                                 ),
                               ),
                               Text(
-                                article.price.toStringAsFixed(2),
+                                article.soldOut
+                                    ? l10n.menuSoldOut
+                                    : article.price.toStringAsFixed(2),
                                 style: const TextStyle(fontSize: 13),
                               ),
                             ],

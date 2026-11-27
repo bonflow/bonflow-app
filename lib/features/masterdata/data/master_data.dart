@@ -187,6 +187,7 @@ class Article {
     required this.modifierGroupIds,
     this.shortName,
     this.stationId,
+    this.soldOut = false,
   });
 
   factory Article.fromJson(Map<String, dynamic> json) => Article(
@@ -196,6 +197,7 @@ class Article {
     categoryId: (json['categoryId'] as num).toInt(),
     price: (json['price'] as num?)?.toDouble() ?? 0,
     stationId: (json['stationId'] as num?)?.toInt(),
+    soldOut: json['soldOut'] as bool? ?? false,
     modifierGroupIds: [
       for (final id in (json['modifierGroupIds'] as List<dynamic>? ?? <dynamic>[]))
         (id as num).toInt(),
@@ -211,6 +213,9 @@ class Article {
   final double price;
   final int? stationId;
   final List<int> modifierGroupIds;
+
+  /// Temporarily unavailable: shown, but cannot be ordered.
+  final bool soldOut;
 }
 
 class ModifierGroup {

@@ -85,6 +85,7 @@
   "menuTitle": "Karte",
   "menuEmpty": "Keine Artikel",
   "menuAdd": "Hinzufügen",
+  "menuSoldOut": "ausverkauft",
   "menuQuantity": "Menge",
   "menuNote": "Notiz",
   "menuCourse": "Gang",

@@ -43,6 +43,7 @@
   "menuTitle": "Menu",
   "menuEmpty": "No items",
   "menuAdd": "Add",
+  "menuSoldOut": "sold out",
   "menuQuantity": "Quantity",
   "menuNote": "Note",
   "menuCourse": "Course",
