@@ -12,6 +12,23 @@ import 'package:material_ui/material_ui.dart';
 import 'support/fakes.dart';
 
 void main() {
+  group('sold out', () {
+    test('articles are available unless the server says otherwise', () {
+      expect(MasterData.fromJson(masterDataJson).articles.single.soldOut, isFalse);
+      final data = MasterData.fromJson({
+        ...masterDataJson,
+        'articles': [
+          {
+            ...(masterDataJson['articles'] as List<dynamic>).single
+                as Map<String, dynamic>,
+            'soldOut': true,
+          },
+        ],
+      });
+      expect(data.articles.single.soldOut, isTrue);
+    });
+  });
+
   group('settings', () {
     test('courses are on unless the server switches them off', () {
       expect(MasterData.fromJson(masterDataJson).settings.coursesEnabled, isTrue);
